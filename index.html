@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <span style="color:green; font-size:30px;">
+        Knight Attack
+    </span>
+    <br><br>
+
+    <script type="text/javascript">
+
+        // Create a center tag to center all the elements
+        var center = document.createElement('center');
+        // Create a table element
+        var ChessTable = document.createElement('table');
+        let moveX, moveY;
+        for (var i = 0; i < 8; i++) {
+            // Create a row
+            var tr = document.createElement('tr');
+            for (var j = 0; j < 8; j++) {
+                // Create a cell
+                moveX = i;
+                moveY = j
+                var td = document.createElement('td');
+                if ((i + j) % 2 == 0) { //if even
+                    td.setAttribute('class', `cell whitecell ${i} ${j}`);
+                    tr.appendChild(td);
+
+                }
+                else {
+                    td.setAttribute('class', `cell blackcell ${i} ${j}`);
+                    // Append the cell to its row
+                    tr.appendChild(td);
+                }
+
+                var possibleMoves = (n, m) => {
+                    // let squares = [[0, 1, 0, 1, 0, 1, 0, 1],
+                    // [1, 0, 1, 0, 1, 0, 1, 0],
+                    // [0, 1, 0, 1, 0, 1, 1, 0],
+                    // [1, 0, 1, 0, 1, 0, 1, 0],
+                    // [0, 1, 0, 1, 0, 1, 0, 1]
+                    // [1, 0, 1, 0, 1, 0, 1, 0],
+                    // [0, 1, 0, 1, 0, 1, 0, 1],
+                    // [1, 0, 1, 0, 1, 0, 1, 0]]
+
+                    // All possible moves of a knight
+                    let X = [2, 1, -1, -2, -2, -1, 1, 2];
+                    let Y = [1, 2, 2, 1, -1, -2, -2, -1];
+
+                    for (let k = 0; k < 8; k++) {
+                        let axisX = m + X[k];
+                        let axisY = n + Y[k];
+                        if (axisX >= 0 && axisY >= 0 && axisX < 8 && axisY < 8) {
+                            console.log(axisX, axisY)
+                            // td.classList.remove("mystyle");
+                            // td.classList.add("mystyle"); `cell greencell ${axisX} ${axisY}`);
+                            // tr.appendChild(td);
+                        }
+
+                    }
+                }
+
+                td.setAttribute('onclick', `possibleMoves(${i},${j})`);
+
+            }
+            // Append the row
+            ChessTable.appendChild(tr);
+        }
+        center.appendChild(ChessTable);
+        // Modifying table attribute properties
+        ChessTable.setAttribute('cellspacing', '0');
+        ChessTable.setAttribute('width', '270px');
+        document.body.appendChild(center);
+
+
+    </script>
+</body>
+
+</html>
