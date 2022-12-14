@@ -10,38 +10,46 @@
 </head>
 
 <body>
-    <span style="color:green; font-size:30px;">
+    <span style="color:rgb(255, 255, 255); font-family:sans-serif; font-size:30px;">
         Knight Attack
     </span>
     <br><br>
-
+    <div class="container">
+        <table width="350px" cellspacing="0">
+            <tr>
+                <th>0</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+            </tr>
+        </table>
+    </div>
+    <span id="txt" style="color:rgb(255, 255, 255); font-family:sans-serif; font-size:15px;">Console to see Raw Data in
+        MxN</span>
     <script type="text/javascript">
-
-        // Create a center tag to center all the elements
-        var center = document.createElement('center');
-        // Create a table element
-        var ChessTable = document.createElement('table');
-        let moveX, moveY;
+        var chessTable = document.getElementsByTagName('table')[0];
+        let axisX = 0, axisY = 0;
         for (var i = 0; i < 8; i++) {
-            // Create a row
             var tr = document.createElement('tr');
             for (var j = 0; j < 8; j++) {
                 // Create a cell
-                moveX = i;
-                moveY = j
                 var td = document.createElement('td');
                 if ((i + j) % 2 == 0) { //if even
-                    td.setAttribute('class', `cell whitecell ${i} ${j}`);
-                    tr.appendChild(td);
-
+                    const td = `<td class="cell whitecell" id = "${i} ${j}" onclick = "possibleMoves(${i},${j})"></td> `;
+                    tr.innerHTML += td;
                 }
                 else {
-                    td.setAttribute('class', `cell blackcell ${i} ${j}`);
-                    // Append the cell to its row
-                    tr.appendChild(td);
+                    const td = `<td class="cell blackcell" id = "${i} ${j}" onclick = "possibleMoves(${i},${j})" ></ td>`;
+                    tr.innerHTML += td;
                 }
 
                 var possibleMoves = (n, m) => {
+                    document.getElementById(`${n} ${m}`).innerHTML += `<img src="https://img.icons8.com/external-nawicon-flat-nawicon/64/null/external-chess-business-nawicon-flat-nawicon.png" width="25px" class="knight"/>`
+
                     // let squares = [[0, 1, 0, 1, 0, 1, 0, 1],
                     // [1, 0, 1, 0, 1, 0, 1, 0],
                     // [0, 1, 0, 1, 0, 1, 1, 0],
@@ -54,34 +62,39 @@
                     // All possible moves of a knight
                     let X = [2, 1, -1, -2, -2, -1, 1, 2];
                     let Y = [1, 2, 2, 1, -1, -2, -2, -1];
-
+                    let arraysss = [];
                     for (let k = 0; k < 8; k++) {
-                        let axisX = m + X[k];
-                        let axisY = n + Y[k];
+                        axisX = n + X[k];
+                        axisY = m + Y[k];
                         if (axisX >= 0 && axisY >= 0 && axisX < 8 && axisY < 8) {
-                            console.log(axisX, axisY)
-                            // td.classList.remove("mystyle");
-                            // td.classList.add("mystyle"); `cell greencell ${axisX} ${axisY}`);
-                            // tr.appendChild(td);
+                            arraysss.push([axisX, axisY]);
                         }
 
                     }
+                    const span = document.getElementById('txt');
+                    for (z of arraysss) {
+                        z.forEach((element, index) => {
+                            console.log(z[0], z[1])
+                            var newTd = document.getElementById(`${z[0]} ${z[1]}`);
+                            newTd.style.background = "green"
+                            setTimeout(function () {
+                                newTd.style.removeProperty("background-color");
+                                document.getElementsByTagName('img')[0].style.display = 'none'
+                            }, 2000);
+                        });
+                    }
                 }
-
-                td.setAttribute('onclick', `possibleMoves(${i},${j})`);
-
             }
-            // Append the row
-            ChessTable.appendChild(tr);
+            var ff = document.getElementsByTagName('table')[0];
+            ff.insertAdjacentElement('beforeend', tr)
         }
-        center.appendChild(ChessTable);
-        // Modifying table attribute properties
-        ChessTable.setAttribute('cellspacing', '0');
-        ChessTable.setAttribute('width', '270px');
-        document.body.appendChild(center);
-
-
     </script>
 </body>
+<footer style="position:fixed;bottom: 0;left: 0;width: 100%;">
+    <div style="background-color: grey; font-family:sans-serif;">
+        Made By
+        <a style="color:rgb(255, 255, 255); font-family:sans-serif;" href="https://github.com/S4nfs">SV</a>
+    </div>
+</footer>
 
 </html>
